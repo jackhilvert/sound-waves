@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=1100">
+    <meta charset="utf-8">
+    <script src = "http://d3js.org/d3.v5.min.js" ></script>
+    <script src = "http://d3js.org/d3-scale.v3.min.js"></script>
+    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    
+    <title>Breaking down Sound Waves</title>
+    <link rel="stylesheet" href="index.css" type="text/css">
+  </head>
+  <body >
+    <section class="title">
+      <div class="title-region">
+        <h1 class="title">Sound Waves</h1>
+        <h2 class="by-line">Breaking it down with Fourier</h3>
+      </div>
+    </section>
+    <section>
+    <p>By Jack Hilvert
+    </p>
+    <h3>Starting with Sines</h3>
+    <p> A sine wave is a representation of a trignometry function. We don't need to have much knowledge of trig to continue on.  
+        However it is good to note the shape of this wave. As time passes (or we increase our x value), the same shape repeats over and over again.
+        Waves like this are the basis of sound.  Its what comes out of a synthesizer when it is set to its basic settings. Below you can see a visual of a basic sine wave. </p>
+    <h3>Frequency, Amplitude, and Wavelength</h3>
+    <p>Frequency, Amplitude, and Wavelength are three properties that we use to describe waves. 
+        The frequency of a wave is the amount of times that we go from peak, to a valley, to a peak again within a certain time period (usually 1 second). 
+        And is usually described in Hertz (Hz). 
+        The amplitude of a wave is the how high the peaks go, and how low the valleys get.  This is represented using a number 
+        that measures the distance from 0 to one of the peaks.
+        Wavelength of a wave is the distance between two peaks. 
+        Try adjusting the three attributes of the wave below. <br>
+        <a href src = 'https://en.wikipedia.org/wiki/Sine_wave'><u>From Wikipedia</u></a>
+    </p>
+        <div id = 'vis' class = 'flex-center'>
+      <div id = 'sineWave'>
+        <div class = 'slideContainer'>
+          <p id = "amplitude_value">Amplitude: .2 </p>
+          <input type = 'range' min = '-2' max = "2" value = '.2' step = 'any'  class = "slider" id = "amplitude">
+          <p id = "wavelength_value">Wavelength/Period: 1.0 </p>
+          <input type = 'range' min = '.1' max = "3" value = "1" step = '.1' class = "slider" id = "wavelength">
+          <p id = "frequency_value">Frequency/Speed: </br>1.00</p>
+          <input type = 'range' min = '1' max = "500" value = '1' step = '1' class = "slider reverse" id = "frequency">
+          <p id = 'note'>Note: The slider values are <strong>not</strong> measurements, and are simply here for reference. </p>
+        </div>
+        <script type = 'text/javascript' src = 'js/basicSine.js' defer ></script>
+      </div>
+      
+    </div>
+    </section>
+    
+    <section>
+      <div class = 'text'>
+        <h3>Adding things up</h3>
+        <p>"So what?" You might be saying, "That synth sound doesn't sound like any natural sound I've ever heard."
+            And you'd be correct! Sine waves are not what we think of when we think of the sounds of nature, or the 
+            plucking of a guitar string.  They can be thought of as the basic building blocks of more complicated waves.
+        </p>
+        <p>
+          This adding of two waves is called <strong>interference</strong> and it can be divided into two categories. 
+          </p>
+        <h4>Constructive Interference</h4> 
+          <p>
+           Adding two waves simply takes the values at any point and adds them together.  So if we take two waves
+           that are lined up perfectly, the peaks will double in size!<br>
+           These two waves are said to be <strong>in phase</strong>.
+           </p>
+        <h4>Destructive Interference</h4>
+        <p>
+           If we shift the second wave a bit so that the peaks of the first one line up with the valleys of the second, 
+           we see that they cancel out and form a straight line. This is called a <strong>standing wave</strong>. <br>
+           These two waves are said to be <strong>out of phase</strong>. <br>
+           More information can be found <a href src = 'https://phys.libretexts.org/Bookshelves/Waves_and_Acoustics/Book%3A_Sound_-_An_Interactive_eBook_(Forinash_and_Christian)/06%3A_Wave_Behavior/6.06%3A_Adding_Wave_Pulses/6.6.01%3A_Adding_Waves#:~:text=1%3A%20Adding%20Waves,-Last%20updated%20Aug&text=When%20two%20waves%20of%20the,amplitude%20of%20the%20individual%20waves.'>here</a>.
+        </p>
+        <p>
+           Try <strong id = 'purple'>adjusting</strong> the sliders next to the animation to see different interference patterns.  
+        </p>
+      </div>
+      <div id = 'addition' class = 'flex-center'>
+        <div id = 'sliders'>
+          <div class = 'slideContainer'>
+            <p id = "amp_value1">Amplitude: 1 </p>
+            <input type = 'range' min = '-2' max = "2" value = '-1.5' step = 'any'  class = "greenslider" id = "amp1">
+            <p id = "per_value1">Wavelength/Period: 1.0 </p>
+            <input type = 'range' min = '.1' max = "3" value = "1" step = '.1' class = "greenslider" id = "per1">
+            <p id = "freq_value1">Frequency/Speed: </br>1.00</p>
+            <input type = 'range' min = '1' max = "500" value = '100' step = '1' class = "greenslider reverse" id = "freq1">
+            <p id = 'note'>Note: The slider values are <strong>not</strong> measurements, and are simply here for reference. </p>
+          </div>
+          <div class = 'slideContainer'>
+            <p id = "amp_value2">Amplitude: -1.5 </p>
+            <input type = 'range' min = '-2' max = "2" value = '1.5' step = 'any'  class = "orangeslider" id = "amp2">
+            <p id = "per_value2">Wavelength/Period: 1.0 </p>
+            <input type = 'range' min = '.1' max = "3" value = "1" step = '.1' class = "orangeslider" id = "per2">
+            <p id = "freq_value2">Frequency/Speed: </br>1.00</p>
+            <input type = 'range' min = '1' max = "500" value = '100' step = '1' class = "orangeslider reverse" id = "freq2">
+          </div>
+        </div>
+        <script type = 'text/javascript' src = 'js/adding.js' defer ></script>
+      </div>
+    </section>
+    
+    <section> 
+      <div class = 'text'> 
+        <h3>Sound Waves</h3>
+        <p>This adding of waves is how sound works.  Sound waves are very similar to the sine waves we just talked about.
+          There is one key difference: they don't look like sine waves.  In fact sine waves have a very distinct sound:</p>
+          <div class = 'sinePlayer'>
+            <div id = 'play_sine'></div>
+            <script type = 'text/javascript' src = 'js/playSine.js'></script>
+          </div>
+        <p>
+          Sound waves can be thought of as additions of many complex waves that don't necessarily follow a sine pattern.
+          Although they don't follow the same pattern, the <strong id = 'purple'>interference</strong> works the same: amplitudes at the same place in time add together
+          create a new wave with either a higher or lower amplitude.
+          Here are some examples of some more complex waves: 
+        </p>
+        </div>
+        <div id = 'complexWaves'>
+        </div>
+        <p>In fact, the third graph is just the sum of the first two!</p> 
+        <script type = 'text/javascript' src = 'js/complexWaves.js'></script>
+        <p>
+        </p>
+    </section>
+
+    <section>
+      <div class = 'text'> 
+        <h3> Finally Fourier </h3>
+        <p> 
+          The Fourier Discrete Transform is a mathematical function that allows us to break down a resulting wave (like the one in the thrid graphic above), and 
+          find out the main frequencies that could be added together to create that wave.  In the graphic below, the input wave is the one in red, and its <strong>component frequencies </strong>
+          are the waves in blue. The chart with vectors pointing straight up is the result of the Discrete Transform: the higher the line, the more <strong>fundamental</strong> the frequency
+          is to the wave. 
+          </p>
+          <div id = 'figure'>
+            <img id = 'fig_1' src = 'img/fig_1.png' atl = 'image source: https://en.wikipedia.org/wiki/Fourier_transform'>
+          </div>
+          
+          <p>
+          For example, the wave being in red and its broken down frequncies in blue: 
+        </p>
+        <div class = 'flex-center'id = "sinusoid"></div>
+        <div id = 'zoomingWaves'>
+
+        </div>
+        <p>
+          The Fourier transform is <strong>not</strong> a simple algorithm, but an intuitive understanding of it would be that we are 
+        "binning" the common frequencies, like we would with a histogram.
+      </p>
+      </div>
+      <script type = 'text/javascript' src = 'js/sinusoid.js'></script>
+    </section> 
+    <section>
+      
+      <h3>The problems with application</h3>
+      <p> 
+        In the real world, we typically get sound data through a microphone.  Here lies the problem: 
+        microphones don't output frequency data. 
+        Microphones output information about the <strong id = 'purple'>volume</strong> of the input. </br>
+        And since we live in a universe where time exists, we are getting this volume information as a function of time. 
+        So, our sample is a time sequence, that looks like a wave, isn't that what we want? <br>
+        Well, no.  Our sample is measured in decibels, so if we were to calculate the frequency of the wave, we would simply be 
+        calculating how many times that sample reaches its peak decibel value.
+      </p> 
+        <div class = 'flex-center' id = 'volume'></div>
+        <script type = 'text/javascript' src = 'js/volume.js'></script>
+      <p>
+        So we need to get our frequency from the <strong id = 'purple'>time domain</strong> to the <strong id = 'purple'>frequency domain</strong>.
+        And this is exactly what the Discrete Fourier Transform does!
+        The formula and a small explaination is given from Stuart Riffle here: 
+      </p>
+      <div class = 'flex-center'>
+        <img src = './img/fig_2.png'>
+      </div>
+      <p>One more problem is that if we are going to perform our operation in this way, we have a <strong>lot</strong> of frequencies to check.
+      So that makes the DFT itself not very useful in application.  Good thing people have figured this out and 
+      have created something even better: The <strong id = 'purple'>Fast</strong> Fourier Transform!</p>
+    </section> 
+    <section>
+      <h3>The Fast Fourier Transform</h3>
+      <p>
+        The most popular algorithm for FFT is the <a href src = "https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm">Cooley-Tukey Algorithm</a>. 
+        It is basically a divide-and-conquer algorithm that breaks the DFT down into two smaller DFT's recursively. <br>
+        An amazing visualization of exactly how the FFT works can be found by Bill Connely at <a href src = 'http://www.billconnelly.net/?p=276'>billconnelly.net</a>
+      </p>
+    </section>
+    <!-- <script type = 'text/javascript' src = 'js/threeAttributes.js'></script>     -->
+    <!-- <script type = 'text/javascript' src = 'js/addingTwo.js'></script> -->
+    </body>
+</html>
